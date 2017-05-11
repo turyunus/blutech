@@ -8,7 +8,10 @@ header("Content-Type: application/json; charset=utf-8");
 
 include 'DatabaseConnection.php';
 
-if (isset($_GET['modelCode']) && isset($_GET['output'])) {
+if (isset($_GET['service']) && isset($_GET['modelCode']) && isset($_GET['output'])) {
+
+	if($_GET['service']=="isProductModelSupported")
+	{
 		$modelCode=$_GET['modelCode'];
         $dbConnection = new DatabaseConnection();
 		$conn=$dbConnection->connection();
@@ -35,6 +38,8 @@ if (isset($_GET['modelCode']) && isset($_GET['output'])) {
 		{
 			echo "wrong infromation";
 		}
+	}
+		
 		
     }
     else{
