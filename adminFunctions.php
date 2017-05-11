@@ -13,6 +13,17 @@ include 'admin.php';
 			
 			$result = $conn->query("CALL `insertAdmin`('$userName', '$password');");
 		}
+		function deleteAdmin(admin $newAdmin){
+			$dbConnection = new DatabaseConnection();
+			$conn=$dbConnection->connection();
+			mysqli_set_charset($conn,'utf8');
+
+			$userName = $newAdmin->userName;
+			$password = $newAdmin->password;
+			
+			
+			$result = $conn->query("CALL `deleteAdmin`('$userName', '$password');");
+		}
 		function selectAdminLogin($userName,$password){
 			$dbConnection = new DatabaseConnection();
 			$conn=$dbConnection->connection();

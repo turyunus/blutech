@@ -89,5 +89,12 @@ include 'adminFunctions.php';
 			$newAdmin->password=$request["password"];
 			$output = $adminFunctionsC->insertAdmin($newAdmin);
 		}
+		else if($process=="delete")
+		{
+			$newAdmin = new admin();
+			$newAdmin->userName=$request["userName"];
+			$newAdmin->password=$request["password"];
+			$output = $adminFunctionsC->deleteAdmin($newAdmin);
+		}
 	}
 ?>
