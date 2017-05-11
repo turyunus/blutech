@@ -8,6 +8,7 @@ header("Content-Type: application/json; charset=utf-8");
 include 'DatabaseConnection.php';
 include 'messageFunctions.php';
 include 'productInServiceFunctions.php';
+include 'adminFunctions.php';
 
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata,TRUE);
@@ -68,6 +69,25 @@ include 'productInServiceFunctions.php';
 		{
 			$serialNo=$request["serialNo"];
 			$output = $productInServiceFunctionsC->searchProductInService($serialNo);
+		}
+	}
+	if($entity=="admin")
+	{
+		$adminFunctionsC = new adminFunctions();
+		$process=$request["process"];
+		if($process=="login")
+		{	
+			$userName=$request["userName"];	
+			$password=$request["password"];	
+			$output = $adminFunctionsC->selectAdminLogin($userName,$password);
+			echo "$output";
+		}
+		else if($process=="insert")
+		{
+			$newAdmin = new admin();
+			$newAdmin->userName=$request["userName"];
+			$newAdmin->password=$request["password"];
+			$output = $adminFunctionsC->insertAdmin($newAdmin);
 		}
 	}
 ?>
