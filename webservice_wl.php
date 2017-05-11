@@ -8,7 +8,7 @@ header("Content-Type: application/json; charset=utf-8");
 
 include 'DatabaseConnection.php';
 
-if (isset($_GET['modelCode'])) {
+if (isset($_GET['modelCode']) && isset($_GET['output'])) {
 		$modelCode=$_GET['modelCode'];
         $dbConnection = new DatabaseConnection();
 		$conn=$dbConnection->connection();
@@ -21,9 +21,23 @@ if (isset($_GET['modelCode'])) {
 			$productModel->typeName=$rs['name'];
 			$productModel->warrantyLength=$rs['warranty_length'];
 		}
-		echo json_encode($productModel, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
+		if($_GET['output']=="json")
+		{
+			echo json_encode($productModel, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
+		}
+		else if ($_GET['output']=="xml")
+		{
+			$xml = new SimpleXMLElement('<root/>');
+			array_walk_recursive($productModel, array ($xml, 'addChild'));
+			print $xml->asXML();
+		}
+		else
+		{
+			echo "wrong infromation";
+		}
+		
     }
     else{
-        echo "wrong";
+        echo "wrong infromation";
     }
 ?>
